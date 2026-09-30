@@ -1,0 +1,92 @@
+/* 기본 배경 및 폰트 설정 */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  /* 타이머 전체 카드 박스 */
+  .timer-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    min-width: 300px;
+  }
+
+  h1 {
+    color: #333333;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+  }
+
+  /* 타이머 큰 숫자 스타일 */
+  .timer-display {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #e74c3c; /* 포인트 레드 색상 */
+    margin: 20px 0;
+    font-family: monospace; /* 숫자가 변할 때 간격이 흔들리지 않게 고정 폭 폰트 사용 */
+  }
+
+  /* 버튼 그룹 및 버튼 스타일 */
+  .button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .input-group {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .input-group input {
+    width: 60px;
+    padding: 8px;
+    font-size: 1rem;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+
+
+  button {
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  /* 각 버튼별 색상 설정 */
+  #start-btn {
+    background-color: #2ecc71;
+    color: white;
+  }
+
+  #pause-btn {
+    background-color: #f1c40f;
+    color: white;
+  }
+
+  #reset-btn {
+    background-color: #e74c3c;
+    color: white;
+  }
+
+  /* 버튼 마우스 올렸을 때 효과 */
+  button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
