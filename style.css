@@ -109,6 +109,10 @@ body {
 }
 
 /* 달력 그리드 레이아웃 (7열) */
+.calendar-header {
+  display: flex;
+  gap: 20px;
+}
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -116,7 +120,7 @@ body {
   margin-top: 15px;
 }
 .day-name {
-  text-align: center;
+  text-align: left;
   font-weight: bold;
   padding: 5px;
 }
@@ -126,13 +130,21 @@ body {
   grid-column: span 7;
   gap: 5px;
 }
+
 .day-cell {
+  width: 109px !important;
+  height: 72px !important;
+  box-sizing: border-box; /* 👈 패딩, 테두리를 109x72 안에 강제로 구겨넣는 핵심 속성! */
+  overflow: hidden;        /* 👈 내용이 넘쳐도 72px을 뚫지 못하게 방어 */
+
   border: 1px solid #00ff22;
   border-radius: 6px;
-  min-height: 60px;
   padding: 5px;
   background-color: #fff;
-  border-radius: 4px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .day-cell.empty {
@@ -141,12 +153,19 @@ body {
 }
 
 .empty-cell {
+  width: 109px !important;
+  height: 72px !important;
+  box-sizing: border-box; /* 👈 패딩, 테두리를 109x72 안에 강제로 구겨넣는 핵심 속성! */
+  overflow: hidden;        /* 👈 내용이 넘쳐도 72px을 뚫지 못하게 방어 */
+
   border: 1px solid #f4f7f6;
   border-radius: 6px;
-  min-height: 60px;
   padding: 5px;
   background-color: #f4f7f6;
-  border-radius: 4px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .day-number {
@@ -159,3 +178,14 @@ body {
   font-weight: bold;
   margin-top: 4px;
 }
+  #history-list {
+    max-height: 50px;
+    overflow-y: auto;
+    padding-left: 20px;
+  }
+
+  #stats-display {
+    max-height: 50px;
+    overflow-y: auto;
+    padding-left: 20px;
+  }
