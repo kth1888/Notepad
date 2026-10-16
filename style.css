@@ -10,14 +10,85 @@ body {
     margin: 0;
   }
 
+  .content-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+  }
+
   /* 타이머 전체 카드 박스 */
-  .timer-container {
+  .timer-container, .todo-container {
     background-color: #ffffff;
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     text-align: center;
     min-width: 300px;
+  }
+
+  .todo-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 300px;
+  }
+
+  #todo-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  #todo-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    width: 100%;
+  }
+
+  .todo-input-group {
+    display: flex;
+    width: 100%;
+    gap: 18px;
+  }
+
+  .todo-input-group input {
+    flex: 1;                        /* 입력창이 남은 공간을 꽉 채우도록 설정 */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+
+  #custom-context-menu {
+    display: none;
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    z-index: 1000;
+  }
+
+  #menu-edit {
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  #menu-delete {
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #ff5252;
   }
 
   h1 {

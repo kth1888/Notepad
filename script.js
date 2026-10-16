@@ -116,7 +116,7 @@ function renderHistory() {
 }
 
 function clearHistory() {
-    localStorage.clear();
+    localStorage.removeItem('pomodoroHistory');
     historyData = [];
     renderHistory();
     renderStats();
@@ -226,6 +226,107 @@ tabTimerBtn.addEventListener('click', () => {
     renderCalendar(); // 통계 탭 열 때 달력 갱신
   });
 
+// To-do list
+const todoDisplay = document.getElementById('todo-list');
+const addTodoBtn = document.getElementById('add-todo-btn');
+const todoInput = document.getElementById('todo-input');
+let todoData = JSON.parse(localStorage.getItem('todoHistory')) || [];
+const contextMenu = document.getElementById('custom-context-menu');
+let targetTodoId = null;
+
+function renderTodo() {
+    todoDisplay.innerHTML = '';
+
+    todoData.forEach(item => {
+    const newList = document.createElement('li');
+    const listDescription = document.createElement('span');
+    listDescription.textContent = item.desc;
+    const checkBox = document.createElement('input');
+    checkBox.type = 'checkbox';
+
+    checkBox.addEventListener('change', () => {
+        if (checkBox.checked) {
+            listDescription.style.textDecoration = 'line-through';
+            listDescription.style.color = '#aaa';
+        } else {
+            listDescription.style.textDecoration = 'none';
+            listDescription.style.color = '#000';
+        }
+    });
+
+    newList.appendChild(listDescription);
+    newList.appendChild(checkBox);
+
+    // 우클릭 시 직접 만든 메뉴 나오는 이벤트 부착
+    newList.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        targetTodoId = item.id;
+
+        contextMenu.style.display = 'block';
+        contextMenu.style.left = `${e.pageX}px`;
+        contextMenu.style.top = `${e.pageY}px`;
+    });
+
+    todoDisplay.appendChild(newList);
+    });
+}
+
+function addTodo() {
+    const now = new Date();
+    const record = {
+        id: Date.now(),
+        date: now.toLocaleDateString(),
+        desc: todoInput.value,
+    };
+
+    todoData.unshift(record);
+    localStorage.setItem('todoHistory', JSON.stringify(todoData));
+    renderTodo();
+};
+
+addTodoBtn.addEventListener('click', () => {
+    addTodo();
+    todoInput.value = '';
+})
+
+window.addEventListener('click', () => {
+    contextMenu.style.display = 'none';
+});
+
+// 투두 삭제 이벤트
+document.getElementById('menu-delete').addEventListener('click', () => {
+    if (targetTodoId) {
+        todoData = todoData.filter(item => item.id !== targetTodoId);
+
+        localStorage.setItem('todoHistory', JSON.stringify(todoData));
+        renderTodo();
+
+        targetTodoId = null;
+    }
+});
+
+// 투두 삭제 이벤트
+document.getElementById('menu-edit').addEventListener('click', ()=> {
+    if (targetTodoId) {
+        const targetItem = todoData.find(item => item.id === targetTodoId);
+        if (targetItem) {
+            const newText = prompt('내용을 수정하세요:', targetItem.desc);
+            if (newText) {
+                targetItem.desc = newText;
+                localStorage.setItem('todoHistory', JSON.stringify(todoData));
+                renderTodo();
+            }
+        }
+        targetTodoId = null;
+    }
+});
+
+
+
+
+
+// 메인 코드 실행
 updateDisPlay();
 renderHistory();
 renderStats();
+renderTodo();

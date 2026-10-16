@@ -13,25 +13,48 @@
     <button id="tab-stats-btn">통계 및 기록</button>
   </nav>
 
-  <section id="timer-section">
-    <div class="timer-container">
-      <h1>Pomodoro Timer</h1>
-      <!-- 타이머 숫자 표시 영역 -->
-      <div id="timer" class="timer-display">25:00</div>
+  <div class="content-wrapper">
+    <section id="timer-section">
+      <div class="timer-container">
+        <h1>Pomodoro Timer</h1>
+        <!-- 타이머 숫자 표시 영역 -->
+        <div id="timer" class="timer-display">25:00</div>
 
-      <!-- 컨트롤 버튼 영역 -->
-      <div class="button-group">
-        <button id="start-btn">시작</button>
-        <button id="pause-btn">일시정지</button>      <button id="reset-btn">리셋</button>
-      </div>
+        <!-- 컨트롤 버튼 영역 -->
+        <div class="button-group">
+          <button id="start-btn">시작</button>
+          <button id="pause-btn">일시정지</button>      <button id="reset-btn">리셋</button>
+        </div>
 
-      <div class="input-group">
-          <label for="time-input">시간 설정(분): </label>
-          <input type="number" id="time-input" value="25" min="1" max="60">
-          <button id="set-time-btn">설정</button>
+        <div class="input-group">
+            <label for="time-input">시간 설정(분): </label>
+            <input type="number" id="time-input" value="25" min="1" max="60">
+            <button id="set-time-btn">설정</button>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section id="todo-section">
+      <div class="todo-container">
+        <h1>todo</h1>
+        <ul id="todo-list">
+
+
+        </ul>
+        <div class="todo-input-group">
+          <input type="text" id="todo-input" placeholder="할 일 입력하기">
+          <button id="add-todo-btn">추가</button>
+        </div>
+      </div>
+      <div id="custom-context-menu">
+        <ul>
+          <li id="menu-edit">수정하기</li>
+          <li id="menu-delete">삭제하기</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
 
   <section id="stats-section" style="display: none;">
     <div class="calendar-header">
