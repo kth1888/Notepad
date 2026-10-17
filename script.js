@@ -272,21 +272,25 @@ function renderTodo() {
 }
 
 function addTodo() {
-    const now = new Date();
-    const record = {
-        id: Date.now(),
-        date: now.toLocaleDateString(),
-        desc: todoInput.value,
-    };
+    if (todoInput.value) {
+        const now = new Date();
+        const record = {
+            id: Date.now(),
+            date: now.toLocaleDateString(),
+            desc: todoInput.value,
+        };
 
-    todoData.unshift(record);
-    localStorage.setItem('todoHistory', JSON.stringify(todoData));
-    renderTodo();
+        todoData.unshift(record);
+        localStorage.setItem('todoHistory', JSON.stringify(todoData));
+        todoInput.value = '';
+        renderTodo();
+    } else {
+        alert('올바른 내용을 입력하세요!');
+    }
 };
 
 addTodoBtn.addEventListener('click', () => {
     addTodo();
-    todoInput.value = '';
 })
 
 window.addEventListener('click', () => {
@@ -305,7 +309,7 @@ document.getElementById('menu-delete').addEventListener('click', () => {
     }
 });
 
-// 투두 삭제 이벤트
+// 투두 수정 이벤트
 document.getElementById('menu-edit').addEventListener('click', ()=> {
     if (targetTodoId) {
         const targetItem = todoData.find(item => item.id === targetTodoId);
@@ -321,7 +325,17 @@ document.getElementById('menu-edit').addEventListener('click', ()=> {
     }
 });
 
-
+function initTodo() {
+    // 투두 리스트 로딩
+    renderTodo();
+    // 엔터로 투두 입력하기
+    todoInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            addTodo();
+            todoInput.value = '';
+        }
+    });
+};
 
 
 
@@ -329,4 +343,4 @@ document.getElementById('menu-edit').addEventListener('click', ()=> {
 updateDisPlay();
 renderHistory();
 renderStats();
-renderTodo();
+initTodo();
