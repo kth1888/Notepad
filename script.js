@@ -13,6 +13,7 @@ const tabTimerBtn = document.getElementById('tab-timer-btn');
 const tabStatsBtn = document.getElementById('tab-stats-btn');
 const timerSection = document.getElementById('timer-section');
 const statsSection = document.getElementById('stats-section');
+const todoSection = document.getElementById('todo-section');
 
 
 let timeLeft = 1500;
@@ -213,6 +214,7 @@ clearHistoryBtn.addEventListener('click', clearHistory);
 
 tabTimerBtn.addEventListener('click', () => {
     timerSection.style.display = 'block';
+    todoSection.style.display = 'block';
     statsSection.style.display = 'none';
     tabTimerBtn.classList.add('active-tab');
     tabStatsBtn.classList.remove('active-tab');
@@ -220,6 +222,7 @@ tabTimerBtn.addEventListener('click', () => {
 
   tabStatsBtn.addEventListener('click', () => {
     timerSection.style.display = 'none';
+    todoSection.style.display = 'none';
     statsSection.style.display = 'block';
     tabStatsBtn.classList.add('active-tab');
     tabTimerBtn.classList.remove('active-tab');
