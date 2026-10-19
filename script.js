@@ -227,12 +227,14 @@ tabTimerBtn.addEventListener('click', () => {
   });
 
 // To-do list
+let todoData = JSON.parse(localStorage.getItem('todoHistory')) || [];
 const todoDisplay = document.getElementById('todo-list');
 const addTodoBtn = document.getElementById('add-todo-btn');
+const finTodoBtn = document.getElementById('fin-todo-btn');
 const todoInput = document.getElementById('todo-input');
-let todoData = JSON.parse(localStorage.getItem('todoHistory')) || [];
 const contextMenu = document.getElementById('custom-context-menu');
 let targetTodoId = null;
+let selectedTodoIds = [];
 
 function renderTodo() {
     todoDisplay.innerHTML = '';
@@ -248,9 +250,13 @@ function renderTodo() {
         if (checkBox.checked) {
             listDescription.style.textDecoration = 'line-through';
             listDescription.style.color = '#aaa';
+
+            selectedTodoIds.push(item.id);
         } else {
             listDescription.style.textDecoration = 'none';
             listDescription.style.color = '#000';
+
+            selectedTodoIds.filter(arr => arr !== item.id);
         }
     });
 
@@ -280,7 +286,7 @@ function addTodo() {
             desc: todoInput.value,
         };
 
-        todoData.unshift(record);
+        todoData.push(record);
         localStorage.setItem('todoHistory', JSON.stringify(todoData));
         todoInput.value = '';
         renderTodo();
@@ -324,6 +330,38 @@ document.getElementById('menu-edit').addEventListener('click', ()=> {
         targetTodoId = null;
     }
 });
+
+// 완료된 투두 정리
+function finishTodo() {
+    const now = new Date().toLocaleDateString();
+    const cnt = selectedTodoIds.length;
+
+    console.log(selectedTodoIds);
+    let dailyHistory = JSON.parse(localStorage.getItem(now)) || { finishedTodos: [] };
+
+    selectedTodoIds.forEach(id => {
+        // 새 위치에 별도 저장
+        const targetItem = todoData.find(item => item.id === id);
+        if (targetItem) {
+            dailyHistory.finishedTodos.push(targetItem.desc);
+        }
+
+        // 기존 데이터에서 삭제
+        todoData = todoData.filter(item => item.id !== id);
+    });
+
+    // localstorage에 반영하기
+    localStorage.setItem(now, JSON.stringify(dailyHistory));
+    localStorage.setItem('todoHistory', JSON.stringify(todoData));
+
+    alert(`${cnt}개가 완료되었습니다!`);
+    selectedTodoIds = [];
+    renderTodo();
+}
+
+finTodoBtn.addEventListener('click', () => {
+    finishTodo();
+})
 
 function initTodo() {
     // 투두 리스트 로딩
