@@ -155,6 +155,19 @@ function renderStats() {
     })
 }
 
+const historySection = document.getElementById('history-section');
+const showHistoryBtn = document.getElementById('show-history-btn');
+showHistoryBtn.addEventListener('click', () => {
+    if (historySection.style.display === 'none') {
+        historySection.style.display = 'block';
+        showHistoryBtn.textContent = '전체 기록 닫기';
+    } else {
+        historySection.style.display = 'none';
+        showHistoryBtn.textContent = '전체 기록 보기';
+    }
+})
+
+
 let currentCalendarDate = new Date();
 
 function renderCalendar() {
