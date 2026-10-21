@@ -1,3 +1,4 @@
+// 타이머
 const timerDisplay = document.getElementById('timer');
 const startBtn = document.getElementById('start-btn');
 const pauseBtn = document.getElementById('pause-btn');
@@ -37,7 +38,9 @@ function startTimer() {
         } else {
             clearInterval(timerInterval);
             timerInterval = null;
-            alert('타이머 종료! 휴식시간입니다.');
+
+            showNotification();
+            playAlarmSound();
 
             addHistory('완료');
             setTimer();
@@ -79,6 +82,37 @@ function setTimer() {
     }
 }
 
+function requestNotificationPermission() {
+    if (!('Notification' in window)) {
+        console.log('이 브라우저는 알림을 지원하지 않습니다.');
+        return;
+    }
+
+    if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+        Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+                console.log('알림 권한이 허용되었습니다!');
+            }
+        });
+    }
+}
+
+function showNotification() {
+    if (Notification.permission === 'granted') {
+        new Notification('뽀모도로 타이머', {
+            body: '타이머 종료! 휴식 시간입니다.',
+        });
+    }
+}
+
+function playAlarmSound() {
+    const sampleAudio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+    const audio = new Audio('https://cdn.pixabay.com/audio/2026/03/02/audio_c9eb237466.mp3');
+
+    audio.play();
+}
+
+// 히스토리 (달력)
 function addHistory(status) {
     const now = new Date();
     const initialSeconds = (parseInt(timeInput.value) || 25) * 60;
@@ -112,8 +146,6 @@ function renderHistory() {
         li.textContent = `${item.date} ${item.time} - ${minutes}분 ${seconds}초 세션 (${item.status})`;
         historyDisplay.appendChild(li);
     });
-
-
 }
 
 function clearHistory() {
@@ -218,7 +250,7 @@ function secToDate(totalSeconds) {
         return text;
 }
 
-
+// 메뉴영역
 startBtn.addEventListener('click', startTimer);
 pauseBtn.addEventListener('click', pauseTimer);
 resetBtn.addEventListener('click', resetTimer);
@@ -393,8 +425,10 @@ function initTodo() {
 
 
 
+
 // 메인 코드 실행
 updateDisPlay();
 renderHistory();
 renderStats();
 initTodo();
+requestNotificationPermission();
